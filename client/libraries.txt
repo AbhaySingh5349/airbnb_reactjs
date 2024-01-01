@@ -1,0 +1,7 @@
+// setup project
+
+npx create-react-app ./ --template typescript
+delete App.css, App.tsx and move App.test.tsx in src/components
+npm start (to run app)
+
+// add tailwind to project (follow: https://tailwindcss.com/docs/guides/create-react-app)
