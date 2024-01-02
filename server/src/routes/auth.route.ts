@@ -1,10 +1,10 @@
 import express from 'express';
 
+import { register } from '../controllers/index';
+import { validateRegisterInput } from '../middlewares/index';
+
 const router = express.Router();
 
-router.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
-  return res.json({ username, email, password, msg: 'register route' });
-});
+router.post('/register', validateRegisterInput, register);
 
 export { router };

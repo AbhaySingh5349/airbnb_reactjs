@@ -3,6 +3,8 @@ import cors from 'cors';
 
 // router
 import { router } from './routes/index';
+import { errorHandler } from './middlewares/index';
+import { NotFoundError } from './errors/index';
 
 const app = express();
 
@@ -14,5 +16,11 @@ app.get('/test', (req: Request, res: Response) => {
 });
 
 app.use('/', router);
+
+app.all('*', () => {
+  throw new NotFoundError();
+});
+
+app.use(errorHandler);
 
 export { app };

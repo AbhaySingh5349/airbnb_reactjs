@@ -5,3 +5,5 @@ tsc --init
 npm install --save dotenv
 npm i --save-dev @types/cors (to allow client app to act on request from server)
 npm install mongodb (to connect with atlas mongodb)
+npm install --save express-validator (add validations to request)
+npm install --save http-status-codes 
