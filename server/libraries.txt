@@ -1,0 +1,7 @@
+npm install --save typescript ts-node-dev
+npm install --save express @types/express
+tsc --init
+
+npm install --save dotenv
+npm i --save-dev @types/cors (to allow client app to act on request from server)
+npm install mongodb (to connect with atlas mongodb)
