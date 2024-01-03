@@ -48,4 +48,13 @@ const validateRegisterInput = reqValidationErrors([
     .withMessage('Passwords do not match'),
 ]);
 
-export { reqValidationErrors, validateRegisterInput };
+const validateLoginInput = reqValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('invalid email format'),
+  body('password').trim().notEmpty().withMessage('password is required'),
+]);
+
+export { reqValidationErrors, validateRegisterInput, validateLoginInput };

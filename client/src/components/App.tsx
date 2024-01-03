@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.withCredentials = true; // to save cookie in browser
+// axios.defaults.Con
 
 function App() {
   return (

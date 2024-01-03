@@ -1,10 +1,14 @@
 import express from 'express';
 
-import { register } from '../controllers/index';
-import { validateRegisterInput } from '../middlewares/index';
+import { register, login } from '../controllers/index';
+import {
+  validateRegisterInput,
+  validateLoginInput,
+} from '../middlewares/index';
 
 const router = express.Router();
 
 router.post('/register', validateRegisterInput, register);
+router.post('/login', validateLoginInput, login);
 
 export { router };

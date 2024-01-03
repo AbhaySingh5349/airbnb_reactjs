@@ -7,3 +7,6 @@ npm i --save-dev @types/cors (to allow client app to act on request from server)
 npm install mongodb (to connect with atlas mongodb)
 npm install --save express-validator (add validations to request)
 npm install --save http-status-codes 
+npm install --save jsonwebtoken @types/jsonwebtoken (to create auth token)
+npm install --save cookie-session @types/cookie-session (to allow "session" property on request)
+npm i --save-dev cookie-parser @types/cookie-parser (to access cookie from browser)

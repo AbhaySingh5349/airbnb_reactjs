@@ -23,13 +23,18 @@ const Login = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const formSubmitHandler: SubmitHandler<z.infer<typeof LoginSchema>> = (
+  const formSubmitHandler: SubmitHandler<z.infer<typeof LoginSchema>> = async (
     data: LoginData
   ) => {
-    axios.post('/auth/register', {
-      email: data.email,
-      password: data.password,
-    });
+    try {
+      await axios.post('/auth/login', {
+        email: data.email,
+        password: data.password,
+      });
+      alert('Login successfull');
+    } catch (err) {
+      alert(`Failed to login: ${err}`);
+    }
   };
 
   return (

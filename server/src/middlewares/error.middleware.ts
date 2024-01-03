@@ -10,9 +10,15 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('IN ERROR HANDLER');
   if (err instanceof CustomErrorClass) {
-    console.log('IN ERROR HANDLER');
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+  }
+
+  if (err.name === 'TokenExpiredError') {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .send({ errors: [{ message: 'Session expired, Please login' }] });
   }
 
   console.log('generic error-middleware: ', err);

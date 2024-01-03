@@ -23,15 +23,20 @@ const Register = () => {
     resolver: zodResolver(RegisterSchema),
   });
 
-  const formSubmitHandler: SubmitHandler<z.infer<typeof RegisterSchema>> = (
-    data: RegisterData
-  ) => {
-    axios.post('/auth/register', {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-      confirm_password: data.confirm_password,
-    });
+  const formSubmitHandler: SubmitHandler<
+    z.infer<typeof RegisterSchema>
+  > = async (data: RegisterData) => {
+    try {
+      await axios.post('/auth/register', {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        confirm_password: data.confirm_password,
+      });
+      alert('Registration successfull, now you can login');
+    } catch (err) {
+      alert(`Failed to register: ${err}`);
+    }
   };
 
   return (
