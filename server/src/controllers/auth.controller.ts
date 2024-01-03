@@ -6,7 +6,6 @@ import { BadRequestError } from '../errors/index';
 import { catchAsync } from '../middlewares/index';
 import { PasswordManager } from '../services/index';
 import { generateAuthToken } from '../services/index';
-// import { createJWT } from '../services/index';
 
 // { "username": "t2", "email": "t2@gmail.com", "password": "abcd", "confirm_password": "abcd" }
 
@@ -42,7 +41,9 @@ const login = catchAsync(async (req: Request, res: Response) => {
 
   res.cookie('jwt_access_cookie', auth.access.token, auth.access.cookieOptions);
 
-  return res.status(StatusCodes.OK).send({ user, auth });
+  return res
+    .status(StatusCodes.OK)
+    .json({ username: user.username, email, _id: user._id });
 });
 
 export { register, login };

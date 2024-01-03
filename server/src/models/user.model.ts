@@ -22,6 +22,6 @@ UserSchema.pre('save', async function (next) {
 });
 
 // check if model already exists, else we creat new
-const User = model('User', UserSchema);
+const User = models.User || model('User', UserSchema);
 
 export { User };

@@ -1,19 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import { UserContext } from '../../context/UserContext';
 
 import { LoginSchema } from '../../types/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { LoginData } from '../../types';
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { setUser } = useContext(UserContext);
+
   const {
     handleSubmit,
     register,
@@ -27,11 +29,13 @@ const Login = () => {
     data: LoginData
   ) => {
     try {
-      await axios.post('/auth/login', {
+      const { data: userInfo } = await axios.post('/auth/login', {
         email: data.email,
         password: data.password,
       });
+      setUser(userInfo); // to verify user is added to context, go to components in Browser
       alert('Login successfull');
+      navigate('/');
     } catch (err) {
       alert(`Failed to login: ${err}`);
     }

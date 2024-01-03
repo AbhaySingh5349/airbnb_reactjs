@@ -10,7 +10,7 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('IN ERROR HANDLER');
+  console.log('IN ERROR HANDLER: ', err);
   if (err instanceof CustomErrorClass) {
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
   }
@@ -20,8 +20,6 @@ const errorHandler = (
       .status(StatusCodes.UNAUTHORIZED)
       .send({ errors: [{ message: 'Session expired, Please login' }] });
   }
-
-  console.log('generic error-middleware: ', err);
 
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)

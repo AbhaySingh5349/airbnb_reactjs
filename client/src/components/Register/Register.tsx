@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { RegisterSchema } from '../../types/validations';
@@ -6,14 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 
-interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
+import { RegisterData } from '../../types';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -34,6 +31,7 @@ const Register = () => {
         confirm_password: data.confirm_password,
       });
       alert('Registration successfull, now you can login');
+      navigate('/login');
     } catch (err) {
       alert(`Failed to register: ${err}`);
     }

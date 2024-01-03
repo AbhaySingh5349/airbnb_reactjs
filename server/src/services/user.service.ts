@@ -5,8 +5,6 @@ import { BadRequestError } from '../errors/index';
 const getUserById = async (params: GetUserByIdParams) => {
   const { userId } = params;
 
-  console.log('getUserById: ', userId);
-
   const user = await User.findById(userId);
   if (!user) throw new BadRequestError(`User not found with id: ${userId}`);
 
