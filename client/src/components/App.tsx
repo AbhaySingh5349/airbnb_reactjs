@@ -1,12 +1,10 @@
-import { Login, Register, Layout, Properties } from './index';
-
 import { Routes, Route } from 'react-router-dom';
-
 import axios from 'axios';
+
+import { Login, Register, Layout, Properties, Profile } from './index';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true; // to save cookie in browser
-// axios.defaults.Con
 
 function App() {
   return (
@@ -16,6 +14,9 @@ function App() {
           <Route index element={<Properties />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:subProfilePage?" element={<Profile />} />
+          {/* <Route path="/profile/bookings" element={<Profile />} />
+          <Route path="/profile/accomodations" element={<Profile />} /> */}
         </Route>
       </Routes>
     </main>

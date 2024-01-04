@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <header className="flex justify-between mx-8">
-      <a href="/" className="flex items-center gap-1">
+      <Link to="/" className="flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,7 +24,7 @@ const Header = () => {
           />
         </svg>
         <span className="font-semibold">airbnb</span>
-      </a>
+      </Link>
       <div className="flex items-center gap-4 p-2 border border-gray-300 rounded-full shadow-md shadow-gray-300">
         <div>Anywhere</div>
         <div className="border border-l border-gray-300"></div>

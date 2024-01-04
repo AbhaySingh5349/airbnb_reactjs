@@ -46,4 +46,12 @@ const login = catchAsync(async (req: Request, res: Response) => {
     .json({ username: user.username, email, _id: user._id });
 });
 
-export { register, login };
+const logOut = async (req: Request, res: Response) => {
+  res.cookie('jwt_access_cookie', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  return res.status(200).json({ msg: 'user loged-out' });
+};
+
+export { register, login, logOut };
