@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,11 +10,17 @@ import { AccomodationSchema } from '../../types/validations';
 import { AccomodationData } from '../../types';
 import { ProfileNavBar } from '../index';
 
+interface AmenitiesObject {
+  [key: string]: boolean;
+}
+
 const AccomodationsForm = () => {
   const [addedPhotos, setAddedPhotos] = useState<Array<string>>([]);
   const [photoLink, setPhotoLink] = useState('');
 
   const navigate = useNavigate();
+
+  const { accomodationId } = useParams();
 
   const {
     handleSubmit,
@@ -26,39 +32,92 @@ const AccomodationsForm = () => {
     resolver: zodResolver(AccomodationSchema),
   });
 
+  useEffect(() => {
+    if (!accomodationId) return;
+    axios
+      .get(`/accomodations/${accomodationId}`)
+      .then(({ data }) => {
+        const amenitiesObject: AmenitiesObject =
+          data.accomodation.amenities.reduce((acc: any, item: any) => {
+            acc[item.name] = item.is_available;
+            return acc;
+          }, {});
+
+        reset({
+          title: data.accomodation.title || '',
+          address: data.accomodation.address || '',
+          description: data.accomodation.description || '',
+          has_wifi: amenitiesObject['has_wifi'] || false,
+          has_tv: amenitiesObject['has_tv'] || false,
+          has_breakfast_included:
+            amenitiesObject['has_breakfast_included'] || false,
+          has_terrace_club: amenitiesObject['has_terrace_club'] || false,
+          has_pets_allowed: amenitiesObject['has_pets_allowed'] || false,
+          has_free_parking: amenitiesObject['has_free_parking'] || false,
+          extraInfo: data.accomodation.extraInfo || '',
+          checkIn: data.accomodation.checkIn.replace('T00:00:00.000Z', ''),
+          checkOut: data.accomodation.checkOut.replace('T00:00:00.000Z', ''),
+          maxGuests: data.accomodation.maxGuests || 0,
+          price: data.accomodation.price || 1,
+        });
+        setAddedPhotos(data.accomodation.photos);
+      })
+      .catch((err) => {
+        alert('Login again');
+        navigate('/login');
+      });
+  }, [accomodationId, navigate, reset]);
+
   const formSubmitHandler: SubmitHandler<
     z.infer<typeof AccomodationSchema>
   > = async (data: AccomodationData) => {
-    try {
-      console.log('input place data: ', data);
-      console.log('photos data: ', addedPhotos);
-      const { data: placeData } = await axios.post(
-        '/accomodation/add-new-accomodation',
-        {
-          title: data.title,
-          address: data.address,
-          photos: addedPhotos,
-          description: data.description,
-          has_wifi: data.has_wifi,
-          has_tv: data.has_tv,
-          has_breakfast_included: data.has_breakfast_included,
-          has_terrace_club: data.has_terrace_club,
-          has_pets_allowed: data.has_pets_allowed,
-          has_free_parking: data.has_free_parking,
-          extraInfo: data.extraInfo || '',
-          checkIn: data.checkIn,
-          checkOut: data.checkOut,
-          maxGuests: data.maxGuests,
-          price: data.price,
-        }
-      );
-      console.log('Axios response: ', placeData.accomodation);
-      alert('form submitted');
-      reset();
-      navigate('/profile/accomodations');
-    } catch (err) {
-      alert(`Failed to login: ${err}`);
-      navigate('/login');
+    console.log('input place data: ', data);
+    console.log('photos data: ', addedPhotos);
+    const placeData = {
+      title: data.title,
+      address: data.address,
+      photos: addedPhotos,
+      description: data.description,
+      has_wifi: data.has_wifi,
+      has_tv: data.has_tv,
+      has_breakfast_included: data.has_breakfast_included,
+      has_terrace_club: data.has_terrace_club,
+      has_pets_allowed: data.has_pets_allowed,
+      has_free_parking: data.has_free_parking,
+      extraInfo: data.extraInfo || '',
+      checkIn: data.checkIn,
+      checkOut: data.checkOut,
+      maxGuests: data.maxGuests,
+      price: data.price,
+    };
+
+    if (accomodationId) {
+      // Update existing Place
+      console.log('UPDATE EXISTING PLACE');
+      try {
+        await axios.put('/accomodations', {
+          accomodationId,
+          ...placeData,
+        });
+        alert('form submitted with updates');
+        reset();
+        navigate('/profile/accomodations');
+      } catch (err) {
+        alert(`Failed to login: ${err}`);
+        navigate('/login');
+      }
+    } else {
+      // New Place
+      console.log('ADD NEW PLACE');
+      try {
+        await axios.post('/accomodations', placeData);
+        alert('form submitted');
+        reset();
+        navigate('/profile/accomodations');
+      } catch (err) {
+        alert(`Failed to login: ${err}`);
+        navigate('/login');
+      }
     }
   };
 
@@ -70,7 +129,7 @@ const AccomodationsForm = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('/accomodation/upload-photo-by-link', {
+      const { data } = await axios.post('/accomodations/upload-photo-by-link', {
         link: photoLink,
       });
       setAddedPhotos((files) => {
@@ -90,7 +149,7 @@ const AccomodationsForm = () => {
     }
 
     axios
-      .post('/accomodation/upload-photo-from-system', data, {
+      .post('/accomodations/upload-photo-from-system', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then((response) => {
@@ -198,10 +257,11 @@ const AccomodationsForm = () => {
           <span className="text-primary-500">Add at least 1 photo</span>
         )}
         {inputHeader('Description')}
+        <span className="text-gray-500 text-sm">(upto 200 characters)</span>
         <textarea
           placeholder="description of place"
           {...register('description')}
-          className="form-input"
+          className="form-input h-32"
         />
         {errors.description && (
           <span className="text-primary-500">{errors.description.message}</span>
@@ -385,7 +445,13 @@ const AccomodationsForm = () => {
           disabled={isSubmitting}
           type="submit"
         >
-          {isSubmitting ? 'Adding Place...' : 'Add Place'}
+          {isSubmitting
+            ? accomodationId
+              ? 'Updating Place...'
+              : 'Adding Place...'
+            : accomodationId
+            ? 'Update Place'
+            : 'Add Place'}
         </button>
       </form>
     </div>

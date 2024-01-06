@@ -1,7 +1,26 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { ProfileNavBar } from '../index';
 
 const Accomodations = () => {
+  const [accomodations, setAccomodations] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get('/accomodations')
+      .then(({ data }) => {
+        console.log('all accomodations: ', data);
+        setAccomodations(data.accomodations);
+      })
+      .catch((err) => {
+        alert(`Error in fetching results: ${err}`);
+        navigate('/login');
+      });
+  }, []);
+
   return (
     <div>
       <ProfileNavBar />
@@ -27,6 +46,32 @@ const Accomodations = () => {
           </svg>
           Add New Place
         </Link>
+
+        {accomodations.length > 0 && (
+          <div className="mt-8">
+            {accomodations.map((place: any) => (
+              <Link
+                to={`/profile/accomodations/${place._id}`}
+                key={place._id}
+                className="flex gap-4 bg-gray-100 p-4 rounded-lg mt-2"
+              >
+                <div className="flex w-32 h-32 bg-gray-300 rounded-md">
+                  {place.photos.length && (
+                    <img
+                      src={`http://localhost:8080/image-uploads/${place.photos[0]}`}
+                      alt={place.photos[0]}
+                      className="object-cover"
+                    ></img>
+                  )}
+                </div>
+                <div>
+                  <h2 className="text-xl text-left">{place.title}</h2>
+                  <p className="text-sm mt-2 text-left">{place.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

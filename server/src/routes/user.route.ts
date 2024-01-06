@@ -1,9 +1,10 @@
 import express from 'express';
 
-import { getUserInfoByToken } from '../controllers/index';
+import { getUserInfoByToken } from '../controllers';
+import { verifyToken } from '../middlewares';
 
 const router = express.Router();
 
-router.get('/profile', getUserInfoByToken);
+router.get('/profile', verifyToken, getUserInfoByToken);
 
 export { router };

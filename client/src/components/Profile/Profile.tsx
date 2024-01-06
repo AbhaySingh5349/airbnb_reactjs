@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { UserContext } from '../../context/UserContext';
-import { Accomodations, ProfileNavBar } from '../index';
+import { ProfileNavBar } from '../index';
 
 const Profile = () => {
   const { user, setUser, userDataLoaded } = useContext(UserContext);
@@ -11,10 +11,6 @@ const Profile = () => {
   if (subProfilePage === undefined) subProfilePage = 'profile';
 
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!user) navigate('/login');
-  // }, [user, navigate, subProfilePage]);
 
   if (!userDataLoaded)
     return (

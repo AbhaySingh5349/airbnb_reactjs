@@ -4,7 +4,10 @@ import {
   uploadPhotoByLink,
   uploadPhotoFromSystem,
   addNewAccomodation,
-} from '../controllers/index';
+  updateAccomodation,
+  getMyAccomodations,
+  getAccomodationById,
+} from '../controllers';
 
 import {
   photosMiddleware,
@@ -20,11 +23,11 @@ router.post(
   photosMiddleware.array('photos', 10),
   uploadPhotoFromSystem
 );
-router.post(
-  '/add-new-accomodation',
-  verifyToken,
-  validateAccomodationInput,
-  addNewAccomodation
-);
+router.post('/', verifyToken, validateAccomodationInput, addNewAccomodation);
+
+router.put('/', verifyToken, validateAccomodationInput, updateAccomodation);
+
+router.get('/', verifyToken, getMyAccomodations);
+router.get('/:accomodationId', verifyToken, getAccomodationById);
 
 export { router };

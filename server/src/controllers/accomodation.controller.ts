@@ -94,4 +94,80 @@ const addNewAccomodation = catchAsync(
   }
 );
 
-export { uploadPhotoByLink, uploadPhotoFromSystem, addNewAccomodation };
+const updateAccomodation = catchAsync(
+  async (req: CustomRequest, res: Response) => {
+    const {
+      accomodationId,
+      title,
+      address,
+      photos,
+      description,
+      has_wifi,
+      has_tv,
+      has_breakfast_included,
+      has_terrace_club,
+      has_pets_allowed,
+      has_free_parking,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price,
+    } = req.body;
+
+    const amenities = [
+      { name: 'has_wifi', is_available: has_wifi },
+      { name: 'has_tv', is_available: has_tv },
+      { name: 'has_breakfast_included', is_available: has_breakfast_included },
+      { name: 'has_terrace_club', is_available: has_terrace_club },
+      { name: 'has_pets_allowed', is_available: has_pets_allowed },
+      { name: 'has_free_parking', is_available: has_free_parking },
+    ];
+
+    const accomodation = await Accomodation.findByIdAndUpdate(accomodationId, {
+      owner: req.currentUser?._id,
+      title,
+      address,
+      photos,
+      description,
+      amenities,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price,
+    });
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ accomodation, msg: 'accomodation data updated' });
+  }
+);
+
+const getMyAccomodations = catchAsync(
+  async (req: CustomRequest, res: Response) => {
+    const userId = req.currentUser?._id;
+    const accomodations = await Accomodation.find({ owner: userId });
+    // console.log('accomodations: ', accomodations);
+
+    return res.json({ accomodations });
+  }
+);
+
+const getAccomodationById = catchAsync(
+  async (req: CustomRequest, res: Response) => {
+    const accomodationId = req.params?.accomodationId;
+    const accomodation = await Accomodation.findById(accomodationId);
+
+    return res.json({ accomodation });
+  }
+);
+
+export {
+  uploadPhotoByLink,
+  uploadPhotoFromSystem,
+  addNewAccomodation,
+  updateAccomodation,
+  getMyAccomodations,
+  getAccomodationById,
+};

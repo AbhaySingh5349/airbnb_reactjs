@@ -81,9 +81,9 @@ const validateAccomodationInput = reqValidationErrors([
     .trim()
     .notEmpty()
     .withMessage('description is required')
-    .isLength({ min: 3, max: 50 })
+    .isLength({ min: 3, max: 200 })
     .withMessage(
-      'description must be at least 3 characters & max 50 characters'
+      'description must be at least 3 characters & max 200 characters'
     ),
   body('has_wifi').notEmpty().isBoolean(),
   body('has_tv').notEmpty().isBoolean(),

@@ -28,6 +28,10 @@ function App() {
             path="/profile/accomodations/new"
             element={<AccomodationsForm />}
           />
+          <Route
+            path="/profile/accomodations/:accomodationId"
+            element={<AccomodationsForm />}
+          />
         </Route>
       </Routes>
     </main>

@@ -43,15 +43,10 @@ export const AccomodationSchema = z
       .string()
       .min(3, 'Address must be at least 3 characters')
       .max(50, 'Address exceeds limit of 50 characters'),
-    // photos: z
-    //   .array(z.string())
-    //   .min(1, 'Add at least 1 photo')
-    //   .max(5, 'Maximum 5 photos can be added'),
     description: z
       .string()
       .min(3, 'Description must be at least 3 characters')
-      .max(50, 'Description exceeds limit of 50 characters'),
-    // perks: z.array(z.string()).min(1, 'Add at least 1 perk'),
+      .max(200, 'Description exceeds limit of 200 characters'),
     has_wifi: z.boolean().default(false),
     has_tv: z.boolean().default(false),
     has_breakfast_included: z.boolean().default(false),
@@ -78,4 +73,8 @@ export const AccomodationSchema = z
   .refine((data) => data.checkIn < data.checkOut, {
     message: 'Checkout date cannot be earlier than checkin date',
     path: ['checkOut'],
+  })
+  .refine((data) => data.checkIn < data.checkOut, {
+    message: 'Checkin date cannot be later than checkout date',
+    path: ['checkIn'],
   });
