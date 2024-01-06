@@ -1,6 +1,6 @@
 import { Schema, models, model } from 'mongoose';
 
-import { UserInterface } from '../types/types';
+import { UserInterface } from '../types';
 import { PasswordManager } from '../services/index';
 
 const UserSchema = new Schema<UserInterface>({

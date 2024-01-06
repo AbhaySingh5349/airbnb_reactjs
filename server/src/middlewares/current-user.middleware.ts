@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { catchAsync } from './index';
 import { jwt_obj } from '../config/env';
-import { CustomRequest } from '../types/types';
+import { CustomRequest } from '../types';
 import { BadRequestError } from '../errors/index';
 import { getUserById } from '../services/index';
 
@@ -31,8 +31,9 @@ const verifyToken = catchAsync(
       req.currentUser = null;
       req.authMessage = 'Authorization Header and Cookies not found';
 
+      const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
       throw new BadRequestError(
-        'You are not logged-in, Please login to get access'
+        `You are not logged-in, Please login to get access to route ${fullUrl} for ${req.method} method`
       );
     } else {
       // Verify Token

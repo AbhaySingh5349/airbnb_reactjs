@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 
 // router
 import { router } from './routes/index';
@@ -9,7 +10,7 @@ import { errorHandler } from './middlewares/index';
 import { NotFoundError } from './errors/index';
 import { node_env } from './config/env';
 import { verifyToken } from './middlewares/index';
-import { CustomRequest } from './types/types';
+import { CustomRequest } from './types';
 
 const app = express();
 
@@ -22,6 +23,12 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+// to make get request to view image: http://localhost:8080/image-uploads/{image_name}
+app.use(
+  '/image-uploads',
+  express.static(path.join(__dirname, '..', '/images'))
+);
 
 /*
 
@@ -47,8 +54,8 @@ app.get('/test', verifyToken, (req: CustomRequest, res: Response) => {
 
 app.use('/', router);
 
-app.all('*', () => {
-  throw new NotFoundError();
+app.all('*', (req, res) => {
+  throw new NotFoundError(`Route Not found ${req.path}`);
 });
 
 app.use(errorHandler);

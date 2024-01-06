@@ -1,5 +1,5 @@
-import { User } from '../models/user.model';
-import { GetUserByIdParams } from '../types/types';
+import { User } from '../models/index';
+import { GetUserByIdParams } from '../types';
 import { BadRequestError } from '../errors/index';
 
 const getUserById = async (params: GetUserByIdParams) => {

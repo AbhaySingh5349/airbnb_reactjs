@@ -4,3 +4,6 @@ export { default as Properties } from './Properties/Properties';
 export { default as Layout } from './Layout';
 export { default as Register } from './Register/Register';
 export { default as Profile } from './Profile/Profile';
+export { default as Accomodations } from './Profile/Accomodations';
+export { default as ProfileNavBar } from './Profile/NavBar';
+export { default as AccomodationsForm } from './Profile/AccomodationsForm';

@@ -25,7 +25,7 @@ import jwt from 'jsonwebtoken';
 
 import { node_env, jwt_obj } from '../config/env';
 import { tokenTypes } from '../config/token';
-import { GenerateTokenParams } from '../types/types';
+import { GenerateTokenParams } from '../types';
 
 const generateToken = (params: GenerateTokenParams) => {
   const { userId, tokenExpires, tokenType } = params;

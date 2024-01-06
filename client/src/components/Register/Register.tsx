@@ -14,6 +14,7 @@ const Register = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof RegisterSchema>>({
     mode: 'onChange',
@@ -31,6 +32,7 @@ const Register = () => {
         confirm_password: data.confirm_password,
       });
       alert('Registration successfull, now you can login');
+      reset();
       navigate('/login');
     } catch (err) {
       alert(`Failed to register: ${err}`);

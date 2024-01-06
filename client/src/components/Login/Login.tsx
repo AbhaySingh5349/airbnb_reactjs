@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import { UserContext } from '../../context/UserContext';
-
-import { LoginSchema } from '../../types/validations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
+
+import { UserContext } from '../../context/UserContext';
+
+import { LoginSchema } from '../../types/validations';
 
 import { LoginData } from '../../types';
 
@@ -19,6 +20,7 @@ const Login = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof LoginSchema>>({
     mode: 'onChange',
@@ -35,6 +37,7 @@ const Login = () => {
       });
       setUser(userInfo); // to verify user is added to context, go to components in Browser
       alert('Login successfull');
+      reset();
       navigate('/');
     } catch (err) {
       alert(`Failed to login: ${err}`);
@@ -68,7 +71,11 @@ const Login = () => {
         {errors.password && (
           <span className="text-primary-500">{errors.password.message}</span>
         )}
-        <button className="btn btn-primary" disabled={isSubmitting}>
+        <button
+          className="btn btn-primary"
+          disabled={isSubmitting}
+          type="submit"
+        >
           {isSubmitting ? 'Loging-in...' : 'Login'}
         </button>
         <div className="mt-4 text-center">
