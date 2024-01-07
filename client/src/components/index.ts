@@ -7,3 +7,4 @@ export { default as Profile } from './Profile/Profile';
 export { default as Accomodations } from './Profile/Accomodations';
 export { default as ProfileNavBar } from './Profile/NavBar';
 export { default as AccomodationsForm } from './Profile/AccomodationsForm';
+export { default as PhotosUploader } from './Profile/PhotosUploader';

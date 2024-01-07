@@ -8,7 +8,7 @@ import * as z from 'zod';
 
 import { AccomodationSchema } from '../../types/validations';
 import { AccomodationData } from '../../types';
-import { ProfileNavBar } from '../index';
+import { ProfileNavBar, PhotosUploader } from '../index';
 
 interface AmenitiesObject {
   [key: string]: boolean;
@@ -16,7 +16,6 @@ interface AmenitiesObject {
 
 const AccomodationsForm = () => {
   const [addedPhotos, setAddedPhotos] = useState<Array<string>>([]);
-  const [photoLink, setPhotoLink] = useState('');
 
   const navigate = useNavigate();
 
@@ -125,42 +124,6 @@ const AccomodationsForm = () => {
     return <h2 className="text-xl mt-4">{text}</h2>;
   }
 
-  async function addPhotoByLink(e: any) {
-    e.preventDefault();
-
-    try {
-      const { data } = await axios.post('/accomodations/upload-photo-by-link', {
-        link: photoLink,
-      });
-      setAddedPhotos((files) => {
-        return [data.file_name, ...files];
-      });
-      setPhotoLink('');
-    } catch (err) {
-      alert(`Error while uploading image: ${err}`);
-    }
-  }
-
-  function addPhotoFromSystem(e: any) {
-    const files = e.target.files;
-    const data = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      data.append('photos', files[i]);
-    }
-
-    axios
-      .post('/accomodations/upload-photo-from-system', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      .then((response) => {
-        const { data } = response;
-        console.log('addPhotoFromSystem data: ', data);
-        setAddedPhotos((files) => {
-          return [...data, ...files];
-        });
-        setPhotoLink('');
-      });
-  }
   return (
     <div>
       <ProfileNavBar />
@@ -190,69 +153,10 @@ const AccomodationsForm = () => {
         )}
         {inputHeader('Photos')}
         <span className="text-gray-500 text-sm">(upto 5)</span>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Add using a link... jpg"
-            className="form-input"
-            value={photoLink}
-            disabled={addedPhotos.length >= 5}
-            onChange={(e) => setPhotoLink(e.target.value)}
-          />
-          <button
-            className={`border px-4 rounded-2xl ${
-              addedPhotos.length >= 5
-                ? 'text-gray-500 bg-gray-300 cursor-default'
-                : 'cursor-pointer'
-            }`}
-            onClick={addPhotoByLink}
-          >
-            Add&nbsp;Photo
-          </button>
-        </div>
-        <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-          {/* (Immediately Invoked Function Expression) */}
-          {addedPhotos.length > 0 &&
-            addedPhotos.map((link, id) => (
-              <div key={id} className="h-20 flex object-cover">
-                <img
-                  className="rounded-xl"
-                  src={`http://localhost:8080/image-uploads/${link}`}
-                  alt={link}
-                ></img>
-              </div>
-            ))}
-          <label
-            className={`h-20 border rounded-2xl p-3 text-xl flex gap- justify-center items-center ${
-              addedPhotos.length >= 5
-                ? 'text-gray-500 bg-gray-300 cursor-default'
-                : 'cursor-pointer'
-            } `}
-          >
-            <input
-              type="file"
-              multiple
-              className="hidden"
-              disabled={addedPhotos.length >= 5}
-              onChange={addPhotoFromSystem}
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z"
-              />
-            </svg>
-            Upload
-          </label>
-        </div>
+        <PhotosUploader
+          addedPhotos={addedPhotos}
+          setAddedPhotos={setAddedPhotos}
+        />
         {addedPhotos.length === 0 && (
           <span className="text-primary-500">Add at least 1 photo</span>
         )}
