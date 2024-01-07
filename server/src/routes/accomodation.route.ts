@@ -13,7 +13,7 @@ import {
   photosMiddleware,
   verifyToken,
   validateAccomodationInput,
-} from '../middlewares/index';
+} from '../middlewares';
 
 const router = express.Router();
 

@@ -8,3 +8,4 @@ export { default as Accomodations } from './Profile/Accomodations';
 export { default as ProfileNavBar } from './Profile/NavBar';
 export { default as AccomodationsForm } from './Profile/AccomodationsForm';
 export { default as PhotosUploader } from './Profile/PhotosUploader';
+export { default as ImageCorouselSlider } from './Profile/ImageCorouselSlider';

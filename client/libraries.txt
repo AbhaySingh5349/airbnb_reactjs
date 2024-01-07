@@ -27,3 +27,6 @@ npm install axios
 npm install zod
 npm i react-hook-form
 npm i @hookform/resolvers
+
+// display image corousel
+npm install --save react-slick @types/react-slick slick-carousel

@@ -22,7 +22,7 @@ export const UserContextProvider = ({ children }) => {
           setUserDataLoaded(true);
         })
         .catch((err) => {
-          alert('Login again');
+          alert('Login again message from user context');
           navigate('/login');
         });
     }
