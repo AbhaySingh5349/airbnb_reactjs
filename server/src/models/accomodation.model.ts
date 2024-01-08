@@ -21,7 +21,7 @@ const AccomodationSchema = new Schema<AccomodationInterface>({
   price: { type: Number, default: 1, required: true },
 });
 
-// check if model already exists, else we creat new
+// check if model already exists, else we create new
 const Accomodation =
   models.Accomodation || model('Accomodation', AccomodationSchema);
 

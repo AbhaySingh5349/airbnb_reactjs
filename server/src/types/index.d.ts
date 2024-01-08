@@ -26,6 +26,17 @@ export interface AccomodationInterface extends Document {
   price: number;
 }
 
+export interface BookingInterface extends Document {
+  accomodation: { type: mongoose.Schema.Types.ObjectId; ref: 'Accomodation' };
+  guest: { type: mongoose.Schema.Types.ObjectId; ref: 'User' };
+  checkIn: Date;
+  checkOut: Date;
+  guestCount: number;
+  name: string;
+  phone: number;
+  price: number;
+}
+
 export interface GenerateTokenParams {
   userId: string;
   tokenExpires?: number;

@@ -27,6 +27,14 @@ export interface AccomodationData {
   price: number;
 }
 
+export interface BookingData {
+  checkIn: Date;
+  checkOut: Date;
+  guestCount: number;
+  name: string;
+  phone: number;
+}
+
 export interface PerksProps {
   selected: any;
   onChange: any;

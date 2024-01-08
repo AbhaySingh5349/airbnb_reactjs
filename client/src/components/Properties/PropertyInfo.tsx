@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ImageCarouselSlider, BookingForm } from '../index';
 
 interface PropertyProps {
+  _id: string;
   title: string;
   address: string;
   description: string;
@@ -186,7 +187,7 @@ const PropertyInfo: React.FC = () => {
             Price: <span className="font-semibold">${property?.price}</span>
             /night per person
           </div>
-          <BookingForm />
+          <BookingForm property={property} />
         </div>
       </div>
     </div>

@@ -96,12 +96,14 @@ const validateAccomodationInput = reqValidationErrors([
     .notEmpty()
     .isISO8601()
     .withMessage('enter valid checkin date')
-    .custom((value) => {
-      console.log('checkin value: ', value);
+    .custom((value, { req }) => {
       if (new Date(value) < new Date()) {
         throw new Error(
           'Enter a valid check-in date that is greater than today'
         );
+      }
+      if (new Date(value) <= new Date(req.body.checkIn)) {
+        throw new Error('Checkin date cannot be later than checkout date');
       }
       return true;
     }),
@@ -117,7 +119,7 @@ const validateAccomodationInput = reqValidationErrors([
       }
 
       if (new Date(value) <= new Date(req.body.checkIn)) {
-        throw new Error('Check-out date must be after the check-in date');
+        throw new Error('Checkout date cannot be earlier than checkin date');
       }
       return true;
     }),
@@ -131,9 +133,64 @@ const validateAccomodationInput = reqValidationErrors([
     .withMessage('enter min price of $1/night per person'),
 ]);
 
+const validateBookingInput = reqValidationErrors([
+  body('checkIn') // yyyy-mm-dd
+    .notEmpty()
+    .isISO8601()
+    .withMessage('enter valid checkin date')
+    .custom((value, { req }) => {
+      if (new Date(value) < new Date()) {
+        throw new Error(
+          'Enter a valid check-in date that is greater than today'
+        );
+      }
+      if (new Date(value) >= new Date(req.body.checkOut)) {
+        throw new Error('Checkin date cannot be later than checkout date');
+      }
+      return true;
+    }),
+  body('checkOut') // yyyy-mm-dd
+    .notEmpty()
+    .isISO8601()
+    .withMessage('enter valid checkout date')
+    .custom((value, { req }) => {
+      if (new Date(value) < new Date()) {
+        throw new Error(
+          'Enter a valid check-out date that is greater than today'
+        );
+      }
+
+      if (new Date(value) <= new Date(req.body.checkIn)) {
+        throw new Error('Checkout date cannot be earlier than checkin date');
+      }
+      return true;
+    }),
+  body('guestCount')
+    .notEmpty()
+    .isInt({ min: 1 })
+    .withMessage('enter min guest count of 1'),
+  body('name')
+    .trim()
+    .notEmpty()
+    .withMessage('name is required')
+    .isLength({ min: 2, max: 50 })
+    .withMessage('name must be at least 2 characters & max 50 characters'),
+  body('phone')
+    .trim()
+    .notEmpty()
+    .withMessage('phone number is required')
+    .isLength({ min: 10, max: 10 })
+    .withMessage('phone number must be exactly 10 digits'),
+  body('price')
+    .notEmpty()
+    .isInt({ min: 1 })
+    .withMessage('booking price must be > 0'),
+]);
+
 export {
   reqValidationErrors,
   validateRegisterInput,
   validateLoginInput,
   validateAccomodationInput,
+  validateBookingInput,
 };

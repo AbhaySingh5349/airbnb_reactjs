@@ -64,11 +64,45 @@ export const AccomodationSchema = z
     checkOut: z.coerce.date().refine((date) => date > new Date(), {
       message: 'Date must be in future',
     }),
-    maxGuests: z.coerce.number().min(1, 'Set guest count to least of 1'),
+    maxGuests: z.coerce
+      .number()
+      .nonnegative({ message: 'Guest Count must be positive' })
+      .min(1, 'Set guest count to least of 1'),
     price: z.coerce
       .number()
       .nonnegative({ message: 'Price must be positive' })
       .min(1, { message: 'Set least price of $1 / person' }),
+  })
+  .refine((data) => data.checkIn < data.checkOut, {
+    message: 'Checkout date cannot be earlier than checkin date',
+    path: ['checkOut'],
+  })
+  .refine((data) => data.checkIn < data.checkOut, {
+    message: 'Checkin date cannot be later than checkout date',
+    path: ['checkIn'],
+  });
+
+export const BookingSchema = z
+  .object({
+    checkIn: z.coerce.date().refine((date) => date > new Date(), {
+      message: 'Date must be in future',
+    }),
+    checkOut: z.coerce.date().refine((date) => date > new Date(), {
+      message: 'Date must be in future',
+    }),
+    guestCount: z.coerce
+      .number()
+      .nonnegative({ message: 'Count must be positive' })
+      .min(1, 'Set guest count to least of 1'),
+    name: z.string().min(2, {
+      message: 'Name should have at least of 2 characters',
+    }),
+    phone: z.coerce
+      .number()
+      .nonnegative({ message: 'Phone number must be positive' })
+      .refine((num) => String(num).length === 10, {
+        message: 'Phone number must have length 10 ',
+      }),
   })
   .refine((data) => data.checkIn < data.checkOut, {
     message: 'Checkout date cannot be earlier than checkin date',

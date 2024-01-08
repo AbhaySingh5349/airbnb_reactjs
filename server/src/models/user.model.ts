@@ -21,7 +21,7 @@ UserSchema.pre('save', async function (next) {
   this.confirm_password = undefined;
 });
 
-// check if model already exists, else we creat new
+// check if model already exists, else we create new
 const User = models.User || model('User', UserSchema);
 
 export { User };
