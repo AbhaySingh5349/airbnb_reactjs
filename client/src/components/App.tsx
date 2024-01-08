@@ -6,6 +6,7 @@ import {
   Register,
   Layout,
   Properties,
+  PropertyInfo,
   Profile,
   Accomodations,
   AccomodationsForm,
@@ -31,6 +32,10 @@ function App() {
           <Route
             path="/profile/accomodations/:accomodationId"
             element={<AccomodationsForm />}
+          />
+          <Route
+            path="/accomodations/:accomodationId"
+            element={<PropertyInfo />}
           />
         </Route>
       </Routes>

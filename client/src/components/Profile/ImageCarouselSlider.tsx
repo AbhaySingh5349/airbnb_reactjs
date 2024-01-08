@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const ImageCorouselSlider = ({ images }: any) => {
+const ImageCarouselSlider = ({ images }: any) => {
   const CustomPrevArrow = (props: any) => (
     <div
       className="slick-arrow slick-prev"
@@ -68,7 +68,7 @@ const ImageCorouselSlider = ({ images }: any) => {
     <>
       <Slider {...settings}>
         {images.map((image: string, id: number) => (
-          <div className="flex rounded-md">
+          <div className="flex rounded-md" key={id}>
             <img
               src={`http://localhost:8080/image-uploads/${image}`}
               alt={image}
@@ -81,4 +81,4 @@ const ImageCorouselSlider = ({ images }: any) => {
   );
 };
 
-export default ImageCorouselSlider;
+export default ImageCarouselSlider;

@@ -154,14 +154,12 @@ const getMyAccomodations = catchAsync(
   }
 );
 
-const getAccomodationById = catchAsync(
-  async (req: CustomRequest, res: Response) => {
-    const accomodationId = req.params?.accomodationId;
-    const accomodation = await Accomodation.findById(accomodationId);
+const getAccomodationById = catchAsync(async (req: Request, res: Response) => {
+  const accomodationId = req.params?.accomodationId;
+  const accomodation = await Accomodation.findById(accomodationId);
 
-    return res.json({ accomodation });
-  }
-);
+  return res.json({ accomodation });
+});
 
 export {
   uploadPhotoByLink,
