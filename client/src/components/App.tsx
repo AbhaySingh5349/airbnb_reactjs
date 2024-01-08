@@ -10,6 +10,7 @@ import {
   Profile,
   Accomodations,
   AccomodationsForm,
+  Bookings,
 } from './index';
 
 axios.defaults.baseURL = 'http://localhost:8080';
@@ -37,6 +38,7 @@ function App() {
             path="/accomodations/:accomodationId"
             element={<PropertyInfo />}
           />
+          <Route path="/profile/bookings" element={<Bookings />} />
         </Route>
       </Routes>
     </main>

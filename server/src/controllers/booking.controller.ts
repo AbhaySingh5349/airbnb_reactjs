@@ -25,4 +25,13 @@ const addNewBooking = catchAsync(async (req: CustomRequest, res: Response) => {
     .json({ booking, msg: 'new booking created' });
 });
 
-export { addNewBooking };
+const getMyBookings = catchAsync(async (req: CustomRequest, res: Response) => {
+  const userId = req.currentUser?._id;
+  const bookings = await Booking.find({ guest: userId }).populate(
+    'accomodation'
+  );
+
+  return res.json({ bookings });
+});
+
+export { addNewBooking, getMyBookings };

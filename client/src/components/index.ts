@@ -11,3 +11,5 @@ export { default as PhotosUploader } from './Profile/PhotosUploader';
 export { default as ImageCarouselSlider } from './Profile/ImageCarouselSlider';
 export { default as PropertyInfo } from './Properties/PropertyInfo';
 export { default as BookingForm } from './Booking/BookingForm';
+export { default as Bookings } from './Booking/Bookings';
+export { default as BookingDates } from './Booking/BookingDates';
