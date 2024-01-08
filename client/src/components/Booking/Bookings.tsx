@@ -19,7 +19,7 @@ const Bookings = () => {
         alert(`Error in fetching results: ${err}`);
         navigate('/login');
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -30,7 +30,7 @@ const Bookings = () => {
             {bookings.map((booking: any) => (
               <div className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden">
                 <div className="py-3 pr-3 grow">
-                  <h2 className="text-xl">{booking.accomodation.title}</h2>
+                  <h2 className="text-xl">{booking?.accomodation?.title}</h2>
                   <div className="text-xl">
                     <BookingDates
                       booking={booking}
