@@ -33,3 +33,5 @@ npm install --save react-slick @types/react-slick slick-carousel
 
 // to get difference in dates
 npm i date-fns
+
+// after deployment, configure mongo-db access & modify axios base url

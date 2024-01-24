@@ -13,10 +13,14 @@ import {
   Bookings,
 } from './index';
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE_URL;
 axios.defaults.withCredentials = true; // to save cookie in browser
 
 function App() {
+  console.log(
+    'process.env.REACT_APP_AXIOS_BASE_URL: ',
+    process.env.REACT_APP_AXIOS_BASE_URL
+  );
   return (
     <main>
       <Routes>
