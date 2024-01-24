@@ -15,7 +15,7 @@ import { CustomRequest } from './types';
 const app = express();
 
 app.use(express.json()); // to parse json data of post requests
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' })); // (client port) allow external url server to hit requests on client
+app.use(cors({ credentials: true, origin: process.env.SERVER_BASE_URL })); // (client port) allow external url server to hit requests on client
 app.use(
   cookieSession({
     signed: false, // since JWT is already encrypted, so we disable encryption on cookie
