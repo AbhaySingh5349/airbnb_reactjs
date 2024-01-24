@@ -3,7 +3,7 @@
   "outputDirectory": "client/build",
   "rewrites": [
     {
-      "source": "/server/(.*)",
+      "source": "/server/**/*.ts",
       "destination": "/server/src/app.ts"
     }
   ]
