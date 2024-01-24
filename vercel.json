@@ -5,7 +5,6 @@
     {
       "source": "/server/(.*)",
       "destination": "/server/src/app.ts"
-    },
-    { "source": "/(.*)", "destination": "/" }
+    }
   ]
 }
