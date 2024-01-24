@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import { Image } from '../index';
+
 interface Props {
   addedPhotos: any;
   setAddedPhotos: any;
@@ -88,11 +90,12 @@ const PhotosUploader = ({ addedPhotos, setAddedPhotos }: Props) => {
         {addedPhotos.length > 0 &&
           addedPhotos.map((link: string, id: number) => (
             <div key={id} className="h-20 flex object-cover relative">
-              <img
+              {/* <img
                 className="rounded-xl"
                 src={`http://localhost:8080/image-uploads/${link}`}
                 alt={link}
-              />
+              /> */}
+              <Image src={link} alt={link} className="rounded-xl" />
               <button
                 onClick={(e) => removePhoto(e, link)}
                 className="absolute bottom-1 right-1 text-gray-300 bg-black bg-opacity-50 rounded-xl p-1.5 cursor-pointer"

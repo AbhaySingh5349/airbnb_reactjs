@@ -13,3 +13,9 @@ npm i --save-dev cookie-parser @types/cookie-parser (to access cookie from brows
 npm i image-downloader (to download image from link)
 npm install --save multer (adds file object to the request, help in image upload from system)
 npm i --save-dev @types/multer
+
+npm i @aws-sdk/client-s3
+
+// to extract image extension when uploaded by link
+npm i --save mime-types @types/mime
+npm i --save-dev @types/mime-types

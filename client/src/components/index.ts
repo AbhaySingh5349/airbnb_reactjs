@@ -13,3 +13,4 @@ export { default as PropertyInfo } from './Properties/PropertyInfo';
 export { default as BookingForm } from './Booking/BookingForm';
 export { default as Bookings } from './Booking/Bookings';
 export { default as BookingDates } from './Booking/BookingDates';
+export { default as Image } from './Profile/Image';

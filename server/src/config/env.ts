@@ -9,5 +9,10 @@ const jwt_obj = {
   secret: process.env.JWT_SECRET,
   accessExpirationMinutes: process.env.JWT_ACCESS_EXPIRATION_MINUTES,
 };
+const s3_obj = {
+  accessKey: process.env.S3_ACCESS_KEY,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  S3_BUCKET: process.env.S3_BUCKET,
+};
 
-export { node_env, port, db_url, db_password, jwt_obj };
+export { node_env, port, db_url, db_password, jwt_obj, s3_obj };

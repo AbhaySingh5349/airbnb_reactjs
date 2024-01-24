@@ -18,11 +18,14 @@ import {
 const router = express.Router();
 
 router.post('/upload-photo-by-link', uploadPhotoByLink);
+
+// photosMiddleware.array('photos', 10),
 router.post(
   '/upload-photo-from-system',
   photosMiddleware.array('photos', 10),
   uploadPhotoFromSystem
 );
+
 router.post('/', verifyToken, validateAccomodationInput, addNewAccomodation);
 
 router.put('/', verifyToken, validateAccomodationInput, updateAccomodation);

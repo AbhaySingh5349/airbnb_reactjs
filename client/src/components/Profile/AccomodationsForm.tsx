@@ -114,8 +114,8 @@ const AccomodationsForm = () => {
         reset();
         navigate('/profile/accomodations');
       } catch (err) {
-        alert(`Failed to login: ${err}`);
-        navigate('/login');
+        alert(`Failed to upload, please check if you are logged-in: ${err}`);
+        // navigate('/login');
       }
     }
   };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import { ProfileNavBar } from '../index';
+import { ProfileNavBar, Image } from '../index';
 
 const Accomodations = () => {
   const [accomodations, setAccomodations] = useState([]);
@@ -57,11 +57,16 @@ const Accomodations = () => {
               >
                 <div className="flex w-32 h-32 bg-gray-300 rounded-md">
                   {place.photos.length && (
-                    <img
-                      src={`http://localhost:8080/image-uploads/${place.photos[0]}`}
+                    // <img
+                    //   src={`http://localhost:8080/image-uploads/${place.photos[0]}`}
+                    //   alt={place.photos[0]}
+                    //   className="object-cover"
+                    // />
+                    <Image
+                      src={place.photos[0]}
                       alt={place.photos[0]}
                       className="object-cover"
-                    ></img>
+                    />
                   )}
                 </div>
                 <div>

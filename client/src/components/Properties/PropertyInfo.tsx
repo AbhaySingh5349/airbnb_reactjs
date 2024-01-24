@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { ImageCarouselSlider, BookingForm } from '../index';
+import { ImageCarouselSlider, BookingForm, Image } from '../index';
 
 interface PropertyProps {
   _id: string;
@@ -115,8 +115,13 @@ const PropertyInfo: React.FC = () => {
           <div>
             {property?.photos[0] && (
               <div>
-                <img
+                {/* <img
                   src={`http://localhost:8080/image-uploads/${property.photos[0]}`}
+                  alt={property.photos[0]}
+                  className="aspect-square object-cover max-h-96 rounded-md"
+                /> */}
+                <Image
+                  src={property.photos[0]}
                   alt={property.photos[0]}
                   className="aspect-square object-cover max-h-96 rounded-md"
                 />
@@ -125,18 +130,28 @@ const PropertyInfo: React.FC = () => {
           </div>
           <div className="grid">
             {property?.photos[1] && (
-              <img
-                src={`http://localhost:8080/image-uploads/${property.photos[1]}`}
+              // <img
+              //   src={`http://localhost:8080/image-uploads/${property.photos[1]}`}
+              //   alt={property.photos[1]}
+              //   className="aspect-square object-cover rounded-md"
+              // />
+              <Image
+                src={property.photos[1]}
                 alt={property.photos[1]}
                 className="aspect-square object-cover rounded-md"
               />
             )}
             <div className="overflow-hidden">
               {property?.photos[2] && (
-                <img
-                  src={`http://localhost:8080/image-uploads/${property.photos[2]}`}
+                // <img
+                //   src={`http://localhost:8080/image-uploads/${property.photos[2]}`}
+                //   alt={property.photos[2]}
+                //   className="aspect-square object-cover relative top-2 rounded-md"
+                // />
+                <Image
+                  src={property.photos[2]}
                   alt={property.photos[2]}
-                  className="aspect-square object-cover relative top-2 rounded-md"
+                  lassName="aspect-square object-cover relative top-2 rounded-md"
                 />
               )}
             </div>

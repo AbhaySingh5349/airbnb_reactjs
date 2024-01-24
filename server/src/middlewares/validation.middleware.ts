@@ -102,7 +102,7 @@ const validateAccomodationInput = reqValidationErrors([
           'Enter a valid check-in date that is greater than today'
         );
       }
-      if (new Date(value) <= new Date(req.body.checkIn)) {
+      if (new Date(value) >= new Date(req.body.checkOut)) {
         throw new Error('Checkin date cannot be later than checkout date');
       }
       return true;

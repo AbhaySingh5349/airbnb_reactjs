@@ -3,6 +3,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import { Image } from '../index';
+
 const ImageCarouselSlider = ({ images }: any) => {
   const CustomPrevArrow = (props: any) => (
     <div
@@ -69,8 +71,13 @@ const ImageCarouselSlider = ({ images }: any) => {
       <Slider {...settings}>
         {images.map((image: string, id: number) => (
           <div className="flex rounded-md" key={id}>
-            <img
+            {/* <img
               src={`http://localhost:8080/image-uploads/${image}`}
+              alt={image}
+              className="rounded-lg object-cover aspect-square"
+            /> */}
+            <Image
+              src={image}
               alt={image}
               className="rounded-lg object-cover aspect-square"
             />
