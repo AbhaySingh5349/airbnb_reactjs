@@ -3,8 +3,8 @@
   "outputDirectory": "client/build",
   "rewrites": [
     {
-      "source": "/server/**/*.ts",
-      "destination": "/server/src/app.ts"
+      "source": "/server/(.*)",
+      "destination": "/server/src/index.ts"
     }
   ]
 }
