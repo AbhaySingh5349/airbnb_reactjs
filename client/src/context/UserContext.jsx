@@ -26,7 +26,7 @@ export const UserContextProvider = ({ children }) => {
           navigate('/login');
         });
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <UserContext.Provider value={{ user, setUser, userDataLoaded }}>

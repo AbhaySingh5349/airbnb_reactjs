@@ -19,7 +19,7 @@ const Accomodations = () => {
         alert(`Error in fetching results: ${err}`);
         navigate('/login');
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div>

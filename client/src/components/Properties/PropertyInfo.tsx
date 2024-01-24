@@ -40,7 +40,7 @@ const PropertyInfo: React.FC = () => {
         alert(`Error in fetching results, try login again: ${err}`);
         navigate('/login');
       });
-  }, []);
+  }, [navigate, accomodationId]);
 
   // if (!property) return <div>Loading Property Info...</div>;
   if (!property) return null;
