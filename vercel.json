@@ -1,10 +1,10 @@
 {
   "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client\\build",
+  "outputDirectory": "client/build",
   "rewrites": [
     {
-      "source": "\\server\\(.*)",
-      "destination": "\\server\\src\\index.ts"
+      "source": "/server/(.*)",
+      "destination": "/server/src/index.ts"
     }
   ]
 }
